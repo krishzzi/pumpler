@@ -12,8 +12,11 @@ class SellerApi extends CI_Controller
 
 	public function index ()
 	{
+
 		$data = $this->userModel->select()->where('role','staff')->where('is_admin',false)->all();
-		 renderJson($data);
+		renderJson($data);
+
+
 	}
 
 

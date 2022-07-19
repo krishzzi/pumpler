@@ -14,12 +14,18 @@ abstract class DBModel extends CI_Model
 
 
 
+
 	public function validClient()
 	{
 		$service = $this->input->get_request_header('Client-Service',true);
 		$apiKey = $this->input->get_request_header('Api-Key',true);
+		if(!empty($service) && !empty($apiKey))
+		{
+			return ($service == self::CLIENT_SERVICE && $apiKey == self::API_KEY) ? true : renderJsonError('unauthorized!',401);
+		}else{
+			return false;
+		}
 
-		return ($service == self::CLIENT_SERVICE && $apiKey == self::API_KEY) ? true : renderJsonError('unauthorized!',401);
 
 	}
 
@@ -48,7 +54,7 @@ abstract class DBModel extends CI_Model
 
 
 
-	protected function getTable()
+	public function getTable()
 	{
 		try {
 			if(empty($this->table))

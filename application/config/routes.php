@@ -82,5 +82,15 @@ $route['api/customer/get-all'] = 'api/customerApi/index';
 
 
 // API ROUTES
+// SELLER
 $route['api/seller/get-all'] ['GET'] = 'api/sellerApi/index';
 $route['api/seller/login']['POST'] = 'api/sellerApi/login';
+
+// CUSTOMER
+//$route['api/customer/get-all'] ['GET'] = 'api/customerApi/index';
+$route['api/customer/login']['POST'] = 'api/customerApi/login';
+$route['api/customer/register']['POST'] = 'api/customerApi/register';
+$route['api/customer/get']['GET'] = 'api/customerApi/getDetails';
+
+// VEHICLE
+$route['api/vehicle/get']['GET'] = 'api/customerApi/getVehicleDetails';
