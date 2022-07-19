@@ -4,9 +4,17 @@ class AccountController extends CI_Controller
 {
 
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('userModel');
+	}
+
 	public function index()
 	{
-		$this->load->view('admin/dashboard');
+		dd($this->userModel->select()->where('mobile',662244)->where('status',true)->get());
+//		$this->load->helper('url');
+//		$this->load->view('admin/dashboard');
 	}
 
 

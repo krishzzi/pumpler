@@ -79,3 +79,8 @@ $route['admin/login'] = 'admin/accountController/login';
 $route['api/customer/create'] = 'api/customerApi/create';
 $route['api/customer/get-all'] = 'api/customerApi/index';
 //$route['admin/login'] = 'admin/account/login';
+
+
+// API ROUTES
+$route['api/seller/get-all'] ['GET'] = 'api/sellerApi/index';
+$route['api/seller/login']['POST'] = 'api/sellerApi/login';

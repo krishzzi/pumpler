@@ -1,20 +1,11 @@
 <?php
 
-function dd(...$sub)
-{
-	echo "<div class='bg-warning text-light'> <pre>";
-	foreach ($sub as $value)
-	{
-		print_r($value);
-	}
-	echo "</pre></div>";
-	die();
-}
+
 
 
 function route_to(string $uri)
 {
-	$this->load->helper('url');
+//
 	return base_url($uri);
 }
 
