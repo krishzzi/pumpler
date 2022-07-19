@@ -25,6 +25,27 @@ abstract class DBModel extends CI_Model
 
 
 
+	public function auth()
+	{
+		$users_id  = $this->input->get_request_header('User-ID', TRUE);
+		$token     = $this->input->get_request_header('Auth-Token', TRUE);
+		$q  = $this->db->select('expire_at')->from('access_tokens')->where('user_id',$users_id)->where('token',$token)->get()->row();
+		if($q == ""){
+			 renderJsonError('Unauthorized',401);
+		} else {
+			if($q->expired_at < date('Y-m-d H:i:s')){
+				 renderJsonError('Your session has been expired!',401);
+			} else {
+				$last_used_at = date('Y-m-d H:i:s');
+				$expire_at = date("Y-m-d H:i:s", strtotime('+12 hours'));
+				$this->db->where('user_id',$users_id)->where('token',$token)->update('access_tokens',array('expire_at' => $expire_at,'last_used_at' => $last_used_at));
+				return array('status' => 200,'message' => 'Authorized.');
+			}
+		}
+	}
+
+
+
 
 
 	protected function getTable()
@@ -71,7 +92,6 @@ abstract class DBModel extends CI_Model
 	 */
 	public function all()
 	{
-		$this->db->select("*");
 		return $this->db->get($this->getTable())->result();
 	}
 
@@ -93,7 +113,13 @@ abstract class DBModel extends CI_Model
 		}else{
 			$this->db->select("*");
 		}
-		$this->db->from($this->getTable());
+		return $this;
+	}
+
+	public function from(string $table='')
+	{
+		$table = $table ?? $this->getTable();
+		$this->db->from($table);
 		return $this;
 	}
 
@@ -111,7 +137,7 @@ abstract class DBModel extends CI_Model
 
 	public function get()
 	{
-		return $this->db->get()->result();
+		return $this->db->get()->row();
 	}
 
 

@@ -12,19 +12,27 @@ class SellerApi extends CI_Controller
 
 	public function index ()
 	{
-		$data = $this->userModel->select()->where('role','staff')->where('is_admin',false)->get();
-
-
-
-		return renderJson($data);
+		$data = $this->userModel->select()->where('role','staff')->where('is_admin',false)->all();
+		 renderJson($data);
 	}
 
 
 
-	public function login($mobile,$password)
+	public function login()
 	{
 
-		$this->userModel->login($mobile,$password);
+		$method = $_SERVER['REQUEST_METHOD'];
+
+		if($method != 'POST'){
+			renderJsonError('Bad request',400);
+		} else {
+			if($this->userModel->validClient() == true)
+			{
+				$mobile = $_REQUEST['mobile'];
+				$password = $_REQUEST['password'];
+				$this->userModel->login($mobile,$password);
+			}
+		}
 
 	}
 

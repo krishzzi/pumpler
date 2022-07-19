@@ -13,16 +13,23 @@ function dd(...$sub)
 }
 
 
-function renderJson($data)
+function renderJson(array $data=[])
 {
 	header('Content-Type: application/json; charset=utf-8');
-	echo empty($data) ? json_encode(200,['status' => 200,'message' => 'something wrong happen!', 'data' => []]) : json_encode(200,['status' => 200,'message' => 'success', 'data' => $data]);
+	echo empty($data) ? json_encode(['status' => false,'message' => 'something wrong happen!', 'data' => []],400) : json_encode(['status' => true,'message' => 'success', 'data' => $data],200);
 	die();
 }
 
 function renderJsonError($msg,$code=204)
 {
 	header('Content-Type: application/json; charset=utf-8');
-	echo json_encode($code,['status' => $code, 'message' => $msg,'data' => []]);
+	echo json_encode(['status' => false, 'message' => $msg,'data' => []],$code);
 	die();
 }
+
+
+	function request()
+	{
+
+		return $_REQUEST;
+	}
