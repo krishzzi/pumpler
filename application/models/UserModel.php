@@ -14,11 +14,15 @@ class UserModel extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+        $this->load->helper('tinkle');
+        $this->load->helper('commons');
     }
 
-    public function getAll()
+    public function getAll($type)
     {
         $this->db->select();
+        $this->db->where('has_role',$type);
+        $this->db->where('status',true);
         return $this->db->get($this->table)->result();
     }
 
@@ -26,25 +30,26 @@ class UserModel extends CI_Model
     public function getSingle($id)
     {
         $this->db->select();
-        $this->db->where($id);
+        $this->db->where('id',$id);
         return $this->db->get($this->table)->row();
+
     }
 
 
 
-    public function sellerLogin($mobile, $password)
+    public function sellerLogin()
     {
-        return $this->login($mobile, $password,'seller');
+        return $this->login($this->input->get('mobile'),  $this->input->get('password'),'seller');
     }
 
-    public function customerLogin($mobile, $password)
+    public function customerLogin()
     {
-        return $this->login($mobile, $password,'customer');
+        return $this->login($this->input->get('mobile'),  $this->input->get('password'),'customer');
     }
 
-    public function adminLogin($mobile, $password)
+    public function adminLogin()
     {
-        return $this->login($mobile, $password,'admin');
+        return $this->login($this->input->get('mobile'), $this->input->get('password'),'admin');
     }
 
 
@@ -64,17 +69,19 @@ class UserModel extends CI_Model
                 'password' => password_hash($this->input->get('password') ?? 'password123',PASSWORD_DEFAULT),
             ]);
 
+            if($role === 'customer'){
 
-            if(!empty($this->input->get('vehicle_number')))
-            {
-                $existVehicle = $this->db->where('vehicle_number',$this->input->get('vehicle_number'))->get('vehicles')->row();
-                if(!$existVehicle)
+                if(!empty($this->input->get('vehicle_number')))
                 {
-                    $this->db->insert('vehicles',[
-                        'vehicle_number' => $this->input->get('vehicle_number'),
-                        'vehicle_type' => $this->input->get('vehicle_type'),
-                        'user_id' => $user->id,
-                    ]);
+                    $existVehicle = $this->db->where('vehicle_number',$this->input->get('vehicle_number'))->get('vehicles')->row();
+                    if(!$existVehicle)
+                    {
+                        $this->db->insert('vehicles',[
+                            'vehicle_number' => $this->input->get('vehicle_number'),
+                            'vehicle_type' => $this->input->get('vehicle_type'),
+                            'user_id' => $user->id,
+                        ]);
+                    }
                 }
             }
 
@@ -89,7 +96,7 @@ class UserModel extends CI_Model
 
     public function login($mobile, $password,$role)
     {
-        $exist = $this->db->where('mobile', $mobile)->where('has_role',$role)->get()->row();
+        $exist = $this->db->where('mobile', $mobile)->where('has_role',$role)->get($this->table)->row();
 
 
         if ($exist) {

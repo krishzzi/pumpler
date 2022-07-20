@@ -10,6 +10,7 @@ class CustomerHome extends CI_Controller
 		$this->load->model('vehicleModel');
         $this->load->model('fuelModel');
 		$this->load->helper('commons');
+        $this->load->helper('tinkle');
 	}
 
 
@@ -40,7 +41,7 @@ class CustomerHome extends CI_Controller
 
     public function placeFuelOrder()
     {
-        $this->fuelModel->placeOrder();
+        return $this->fuelModel->placeOrder();
     }
 
 

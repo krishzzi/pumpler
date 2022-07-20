@@ -7,13 +7,14 @@ class CustomerApi extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('vehicleModel');
+        $this->load->model('userModel');
 		$this->load->helper('commons');
         $this->load->helper('tinkle');
 	}
 
 	public function index ()
 	{
-		$data = $this->vehicleModel->getall();
+		$data = $this->vehicleModel->getall('customer');
 		if($data)
 		{
 			renderJson($data);
@@ -57,6 +58,11 @@ class CustomerApi extends CI_Controller
 			renderJsonError('Wrong id Provided!');
 		}
 	}
+
+    public function getDetails(){
+        return renderJson(ObjectToArray($this->userModel->getSingle($this->input->get('User-ID'))));
+    }
+
 
 	public function getVehicleDetails()
 	{

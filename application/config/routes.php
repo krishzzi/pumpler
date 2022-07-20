@@ -77,7 +77,7 @@ $route['admin'] = 'admin/accountController';
 $route['admin/login'] = 'admin/accountController/login';
 
 $route['api/customer/create'] = 'api/customerApi/create';
-$route['api/customer/get-all'] = 'api/customerApi/index';
+
 //$route['admin/login'] = 'admin/account/login';
 
 
@@ -89,7 +89,7 @@ $route['api/seller/login']['POST'] = 'api/sellerApi/login';
 $route['api/seller/register']['POST'] = 'api/sellerApi/register';
 
 // CUSTOMER
-//$route['api/customer/get-all'] ['GET'] = 'api/customerApi/index';
+$route['api/customer/get-all'] ['GET'] = 'api/customerApi/index';
 $route['api/customer/login']['POST'] = 'api/customerApi/login';
 $route['api/customer/register']['POST'] = 'api/customerApi/register';
 $route['api/customer/get']['GET'] = 'api/customerApi/getDetails';

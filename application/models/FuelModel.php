@@ -29,7 +29,7 @@ class FuelModel extends CI_Model
     public function getSingle($id)
     {
         $this->db->select();
-        $this->db->where($id);
+        $this->db->where('id',$id);
         return $this->db->get($this->table)->row();
     }
 

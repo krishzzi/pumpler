@@ -101,7 +101,7 @@ class VehicleModel extends CI_Model
     public function getSingle($id)
     {
         $this->db->select();
-        $this->db->where($id);
+        $this->db->where('id',$id);
         return $this->db->get($this->table)->row();
     }
 
@@ -118,7 +118,7 @@ class VehicleModel extends CI_Model
                 'username' => $this->input->get('username') ?? 'untitled User',
                 'email' => $this->input->get('email') ?? '',
                 'mobile' => $this->input->get('mobile') ?? '',
-                'parent_id' => $parent_id,
+                'parent_id' => $parent_id ?? $this->input->get('User-ID'),
                 'has_role' => 'customer',
                 'password' => password_hash($this->input->get('password') ?? 'password123',PASSWORD_DEFAULT),
             ]);

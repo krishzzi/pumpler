@@ -9,13 +9,13 @@ class SellerApi extends CI_Controller
 		parent::__construct();
 		$this->load->model('userModel');
 		$this->load->helper('commons');
+        $this->load->helper('tinkle');
 	}
 
 	public function index ()
 	{
 
-		$data = $this->userModel->getall();
-		renderJson($data);
+        return renderJson($this->userModel->getAll('seller'));
 
 
 	}
@@ -35,31 +35,34 @@ class SellerApi extends CI_Controller
 	public function login()
 	{
 
-		$method = $_SERVER['REQUEST_METHOD'];
+        $method = $_SERVER['REQUEST_METHOD'];
 
-		if($method != 'POST'){
-			renderJsonError('Bad request',400);
-		} else {
-			if($this->userModel->validClient() == true)
-			{
-				$mobile = $_REQUEST['mobile'];
-				$password = $_REQUEST['password'];
-				$this->userModel->login($mobile,$password);
-			}
-		}
+
+
+        if($method != 'POST'){
+            renderJsonError('Bad request',400);
+        } else {
+            if($this->userModel->validClient() == true)
+            {
+                $this->userModel->sellerLogin();
+            }
+        }
 
 	}
 
 
     public function getAll()
     {
-        return renderJson($this->userModel->getAll());
+        return renderJson($this->userModel->getAll('seller'));
     }
 
 
     public function getDetails()
     {
         return renderJson(ObjectToArray($this->userModel->getSingle($this->input->get('User-ID'))));
+
+
+
     }
 
 

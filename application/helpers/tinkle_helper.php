@@ -1,29 +1,27 @@
 <?php
 
-$loader = new CI_Loader();
+    function arr2Obj(mixed $a)
+    {
 
-	function arr2Obj(mixed $a)
-	{
+        if (is_array($a) ) {
+            foreach($a as $k => $v) {
+                if (is_integer($k)) {
+                    // only need this if you want to keep the array indexes separate
+                    // from the object notation: eg. $o->{1}
+                    $a['index'][$k] = arr2Obj($v);
+                }
+                else {
+                    $a[$k] = arr2Obj($v);
+                }
+            }
 
-		if (is_array($a) ) {
-			foreach($a as $k => $v) {
-				if (is_integer($k)) {
-					// only need this if you want to keep the array indexes separate
-					// from the object notation: eg. $o->{1}
-					$a['index'][$k] = arr2Obj($v);
-				}
-				else {
-					$a[$k] = arr2Obj($v);
-				}
-			}
+            return (object) $a;
+        }
 
-			return (object) $a;
-		}
+        // else maintain the type of $a
+        return $a;
 
-		// else maintain the type of $a
-		return $a;
-
-	}
+    }
 
 
 	function isCli():bool
@@ -46,20 +44,32 @@ $loader = new CI_Loader();
 
 	function request()
 	{
+        $data = array_merge([
+            'method' => $_SERVER['REQUEST_METHOD'],
+            'query' => $_SERVER['REQUEST_URI'],
+            'uri' => $_SERVER['REQUEST_URI'],
+            'fullUrl' => $_SERVER['REQUEST_SCHEME'].'//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
+            'url' => $_SERVER['REQUEST_SCHEME'].'//'.$_SERVER['HTTP_HOST'],
+            'isPost' => strtolower($_SERVER['REQUEST_METHOD']) === 'post',
+            'isGet' => strtolower($_SERVER['REQUEST_METHOD']) === 'get',
+            'get' => arr2Obj($_GET),
+            'post' => arr2Obj($_POST),
+            'file' => arr2Obj($_FILES),
+            'hasFile' => !empty($_FILES['name'])
+        ],contentLoad());
 
-		return arr2Obj(array_merge([
-			'method' => $_SERVER['REQUEST_METHOD'],
-			'query' => $_SERVER['REQUEST_URI'],
-			'uri' => $_SERVER['REQUEST_URI'],
-			'fullUrl' => $_SERVER['REQUEST_SCHEME'].'//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
-			'url' => $_SERVER['REQUEST_SCHEME'].'//'.$_SERVER['HTTP_HOST'],
-			'isPost' => strtolower($_SERVER['REQUEST_METHOD']) === 'post',
-			'isGet' => strtolower($_SERVER['REQUEST_METHOD']) === 'get',
-			'get' => arr2Obj($_GET),
-			'post' => arr2Obj($_POST),
-			'file' => arr2Obj($_FILES),
-			'hasFile' => !empty($_FILES['name'])
-		],contentLoad()));
+        if(is_string($data) || is_object($data))
+        {
+            return arr2Obj(ObjectToArray($data));
+        }
+
+
+        if(is_array($data))
+        {
+            return arr2Obj($data);
+        }
+
+
 
 	}
 
