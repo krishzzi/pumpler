@@ -191,7 +191,7 @@
             )  ENGINE=INNODB;",
 
 
-            'user_schedule' => "CREATE TABLE IF NOT EXISTS user_pumps (
+            'user_schedule' => "CREATE TABLE IF NOT EXISTS user_schedule (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nozzle_id INT(11),
                 user_id INT(11),
@@ -261,43 +261,6 @@
 
 
 
-            //"ALTER TABLE `user_pumps` ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE; ALTER TABLE `user_pumps` ADD CONSTRAINT `pump_id` FOREIGN KEY (`pump_id`) REFERENCES `pumps`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;",
-
-
-//            "CREATE TABLE IF NOT EXISTS attachments (
-//                id INT AUTO_INCREMENT PRIMARY KEY,
-//                file_name VARCHAR(255),
-//                file_path VARCHAR(255),
-//                link VARCHAR(255),
-//                file_size VARCHAR(255),
-//                file_type VARCHAR(255),
-//                user_id INT(11),
-//                content_id INT(11),
-//                content_type VARCHAR(255),
-//                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-//                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-//            )  ENGINE=INNODB;",
-
-
-            //		"CREATE TABLE IF NOT EXISTS products (
-            //            id INT AUTO_INCREMENT PRIMARY KEY,
-            //            title VARCHAR(255),
-            //    		quantity INT(11),
-            //    		price INT(11),
-            //    		status BOOLEAN DEFAULT true,
-            //            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            //    		updated_at TIMESTAMP NULL
-            //        )  ENGINE=INNODB;",
-            //
-            //		"CREATE TABLE IF NOT EXISTS product_categories (
-            //            category_id INT(11),
-            //    		product_id INT(11)
-            //        )  ENGINE=INNODB;",
-            //
-            //		"ALTER TABLE `product_categories` ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `product_categories` ADD CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;",
-            //
-
-
 
 
 
@@ -365,13 +328,13 @@
     $query = $pdo->exec($sql);
 
 
-    $sql = "INSERT INTO `fuels` (`id`, `title`, `provider`, `oil_type`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Petrol', 'afa', 'pp', 'asdfaf', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
+    $sql = "INSERT INTO `fuels` (`id`, `title`, `provider`, `oil_type`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Petrol', 'afa', 'petrol', 'demo.jpg', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
     $query = $pdo->exec($sql);
 
-    $sql = "INSERT INTO `foods` (`id`, `title`, `provider`, `category_id`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Petrol', 'afa', 1, 'asdfaf', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
+    $sql = "INSERT INTO `foods` (`id`, `title`, `provider`, `category_id`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Biriyani', 'afa', 1, 'demo.jpg', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
     $query = $pdo->exec($sql);
 
-    $sql = "INSERT INTO `gifts` (`id`, `title`, `provider`, `category_id`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'Petrol', 'afa', 1, 'asdfaf', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
+    $sql = "INSERT INTO `gifts` (`id`, `title`, `provider`, `category_id`, `banner`, `quantity`, `price`, `reward_value`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'BleBlade', 'afa', 1, 'demo.jpg', '100', '110', '2', '1', current_timestamp(), current_timestamp());";
     $query = $pdo->exec($sql);
 
     $sql = "INSERT INTO `nozzles` (`id`, `title`, `created_at`, `updated_at`) VALUES (NULL,'Nozzle-A', current_timestamp(), current_timestamp());";

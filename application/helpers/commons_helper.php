@@ -41,27 +41,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-//			function ObjectToArray($object, $assoc=1, $empty=''){
-//
-//				$output = array();
-//				$assoc = (!empty($assoc)) ? TRUE : FALSE;
-//
-//				if (!empty($object)) {
-//					$ArrayOrObject = is_object($object) ? get_object_vars($object) : $object;
-//					$i=0;
-//					foreach ($ArrayOrObject as $key => $value) {
-//						$key = ($assoc !== FALSE) ? $key : $i;
-//						if (is_array($value) || is_object($value)) {
-//							$output[$key] = (empty($value)) ? $empty : ObjectToArray($value);
-//						}
-//						else {
-//							$output[$key] = (empty($value)) ? $empty : (string)$value;
-//						}
-//						$i++;
-//					}
-//				}
-//				return $output;
-//			}
+			function ObjectToArray($object, $assoc=1, $empty=''){
+
+				$output = array();
+				$assoc = (!empty($assoc)) ? TRUE : FALSE;
+
+				if (!empty($object)) {
+					$ArrayOrObject = is_object($object) ? get_object_vars($object) : $object;
+					$i=0;
+					foreach ($ArrayOrObject as $key => $value) {
+						$key = ($assoc !== FALSE) ? $key : $i;
+						if (is_array($value) || is_object($value)) {
+							$output[$key] = (empty($value)) ? $empty : ObjectToArray($value);
+						}
+						else {
+							$output[$key] = (empty($value)) ? $empty : (string)$value;
+						}
+						$i++;
+					}
+				}
+				return $output;
+			}
 
 
 

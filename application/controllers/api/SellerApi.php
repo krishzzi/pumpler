@@ -14,11 +14,21 @@ class SellerApi extends CI_Controller
 	public function index ()
 	{
 
-		$data = $this->userModel->select()->where('role','seller')->where('is_admin',false)->all();
+		$data = $this->userModel->getall();
 		renderJson($data);
 
 
 	}
+
+
+    public function register()
+    {
+        if(request()->isPost && !empty($this->input->get('mobile')) && $this->input->get('password'))
+        {
+            return $this->userModel->register('seller');
+        }
+
+    }
 
 
 
@@ -39,6 +49,20 @@ class SellerApi extends CI_Controller
 		}
 
 	}
+
+
+    public function getAll()
+    {
+        return renderJson($this->userModel->getAll());
+    }
+
+
+    public function getDetails()
+    {
+        return renderJson(ObjectToArray($this->userModel->getSingle($this->input->get('User-ID'))));
+    }
+
+
 
 
 }

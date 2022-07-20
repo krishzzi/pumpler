@@ -84,7 +84,9 @@ $route['api/customer/get-all'] = 'api/customerApi/index';
 // API ROUTES
 // SELLER
 $route['api/seller/get-all'] ['GET'] = 'api/sellerApi/index';
+$route['api/seller/details'] ['GET'] = 'api/sellerApi/getDetails';
 $route['api/seller/login']['POST'] = 'api/sellerApi/login';
+$route['api/seller/register']['POST'] = 'api/sellerApi/register';
 
 // CUSTOMER
 //$route['api/customer/get-all'] ['GET'] = 'api/customerApi/index';
@@ -96,6 +98,7 @@ $route['api/customer/change-password']['POST'] = 'api/customerApi/changePassword
 // Customer Application Portal
 $route['api/customer/get-homepage'] ['get'] = 'api/customerHome/index';
 $route['api/customer/my-reward'] ['get'] = 'api/customerHome/getMyRewards';
+$route['api/customer/order-fuel'] ['post'] = 'api/customerHome/placeFuelOrder';
 
 
 // VEHICLE

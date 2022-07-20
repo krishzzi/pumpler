@@ -16,19 +16,18 @@ class FoodApi extends CI_Controller
 
 	public function index()
 	{
-
-		$giftList = $this->foodModel->where('status',true)->all();
-		if($giftList)
-		{
-			renderJson($giftList);
-		}else{
-			renderJsonError('no record found');
-		}
-
+        renderJson($this->foodModel->getall());
 
 
 	}
 
+
+    public function show()
+    {
+        $id = 1;
+        renderJson($this->foodModel->getSingle($id));
+
+    }
 
 
 

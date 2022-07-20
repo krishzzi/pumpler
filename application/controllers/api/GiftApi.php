@@ -15,15 +15,16 @@ class GiftApi extends CI_Controller
 
 	public function index()
 	{
-		$giftList = $this->giftModel->where('status',true)->all();
-		if(!empty($giftList))
-		{
-			renderJson($giftList);
-		}else{
-			renderJsonError('no record found');
-		}
+        renderJson($this->giftModel->getall());
 
 	}
+
+    public function show()
+    {
+        $id = 1;
+        renderJson($this->giftModel->getSingle($id));
+
+    }
 
 
 

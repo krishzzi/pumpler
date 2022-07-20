@@ -19,20 +19,29 @@ class CustomerHome extends CI_Controller
 
 		$todayPetrol = $this->fuelModel->todayPetrol();
 
+
+
 		$data = [
 			'petrol' => [
-				'price' => $todayPetrol[0]->price,
-				'last_price' => $todayPetrol[1]->price,
-				'difference' => ($todayPetrol[0]->price - $todayPetrol[1]->price)/100 . '%',
-				'status' => $todayPetrol[0]->price > $todayPetrol[1]->price,
+				'price' => $todayPetrol->price,
+				'last_price' => $todayPetrol->price,
+				'difference' => ($todayPetrol->price - $todayPetrol->price)/100 . '%',
+				'status' => $todayPetrol->price > $todayPetrol->price,
 			],
 			'about_us' => 'About us description',
+            'myReward' => $this->userModel->getMyRewards()
 		];
 
 		return renderJson($data);
 
 
 	}
+
+
+    public function placeFuelOrder()
+    {
+        $this->fuelModel->placeOrder();
+    }
 
 
     public function getMyRewards()

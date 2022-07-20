@@ -21,12 +21,30 @@ class FuelApi extends CI_Controller
         if(!empty($this->input->get('oil_type')))
         {
             if(strtolower($this->input->get('oil_type')) === 'petrol'){
-                return $this->fuelModel->todayPetrol();
+                $result = $this->fuelModel->todayPetrol();
+                if(is_object($result))
+                {
+                    return renderJson(ObjectToArray($result));
+                }
+
             }
         }
 
     }
 
+
+    public function index()
+    {
+        renderJson($this->fuelModel->getall());
+
+    }
+
+    public function show()
+    {
+        $id = 1;
+        renderJson($this->fuelModel->getSingle($id));
+
+    }
 
 
 

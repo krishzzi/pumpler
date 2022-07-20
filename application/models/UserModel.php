@@ -51,7 +51,7 @@ class UserModel extends CI_Model
     public function register($role='customer',$parent_id=null)
     {
 
-        if(!$this->db->select()->from('users')->where('mobile',$this->input->get('mobile'))->count())
+        if(!$this->db->where('mobile',$this->input->get('mobile'))->get('users')->row())
         {
             $pp = $this->input->get('password') ?? 'password123';
 
@@ -78,7 +78,7 @@ class UserModel extends CI_Model
                 }
             }
 
-            renderJson(['id' => $this->userModel->lastID()]);
+            renderJson(['id' => $this->db->insert_id()]);
         }else{
             renderJsonError('User Exist already!');
         }

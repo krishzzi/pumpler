@@ -61,11 +61,11 @@ class CustomerApi extends CI_Controller
 	public function getVehicleDetails()
 	{
 
-		$user = $this->vehicleModel->select()->from('users')->where('vehicle_no',$_REQUEST['vehicle_no'])->get();
-		if($user)
+		$data = $this->vehicleModel->getVehicleDetailViaNumber();
+		if($data)
 		{
-			$user->password = null;
-			renderJson(JsonToArray($user));
+            $data->password = null;
+			renderJson(ObjectToArray($data));
 		}else{
 			renderJsonError('Wrong id Provided!');
 		}

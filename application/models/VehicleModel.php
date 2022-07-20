@@ -183,6 +183,11 @@ class VehicleModel extends CI_Model
 
 
 
+    public function getVehicleDetailViaNumber()
+    {
+        return $this->db->where('vehicle_number',$this->input->get('vehicle_number'))->get('vehicles')->row();
+    }
+
 
 
 
