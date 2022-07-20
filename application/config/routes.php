@@ -91,6 +91,21 @@ $route['api/seller/login']['POST'] = 'api/sellerApi/login';
 $route['api/customer/login']['POST'] = 'api/customerApi/login';
 $route['api/customer/register']['POST'] = 'api/customerApi/register';
 $route['api/customer/get']['GET'] = 'api/customerApi/getDetails';
+$route['api/customer/change-password']['POST'] = 'api/customerApi/changePassword';
+
+// Customer Application Portal
+$route['api/customer/get-homepage'] ['get'] = 'api/customerHome/index';
+$route['api/customer/my-reward'] ['get'] = 'api/customerHome/getMyRewards';
+
 
 // VEHICLE
 $route['api/vehicle/get']['GET'] = 'api/customerApi/getVehicleDetails';
+
+// GIFT
+$route['api/gifts/all']['GET'] = 'api/giftApi/index';
+//Foods
+$route['api/foods/all']['GET'] = 'api/foodApi/index';
+
+// Fuel
+
+$route['api/fuel/today'] ['GET'] = 'api/fuelApi/todayRate';

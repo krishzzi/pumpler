@@ -1,17 +1,19 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class CustomerApi extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('userModel');
+		$this->load->model('vehicleModel');
+		$this->load->helper('commons');
+        $this->load->helper('tinkle');
 	}
 
 	public function index ()
 	{
-		$data = $this->userModel->select()->where('role','customer')->where('is_admin',false)->all();
+		$data = $this->vehicleModel->getall();
 		if($data)
 		{
 			renderJson($data);
@@ -28,24 +30,25 @@ class CustomerApi extends CI_Controller
 
 		$method = $_SERVER['REQUEST_METHOD'];
 
+
+
 		if($method != 'POST'){
 			renderJsonError('Bad request',400);
 		} else {
-			if($this->userModel->validClient() == true)
+			if($this->vehicleModel->validClient() == true)
 			{
-				$mobile = $_REQUEST['mobile'];
-				$password = $_REQUEST['password'];
-				$this->userModel->login($mobile,$password);
+				$this->vehicleModel->login();
 			}
 		}
 
 	}
 
 
-	public function getDetails()
+	public function getAll()
 	{
 
-		$user = $this->userModel->select()->from('users')->where('id',$_REQUEST['User-ID'])->where('role','customer')->get();
+		$user = $this->vehicleModel->getAll();
+
 		if($user)
 		{
 			$user->password = null;
@@ -58,7 +61,7 @@ class CustomerApi extends CI_Controller
 	public function getVehicleDetails()
 	{
 
-		$user = $this->userModel->select()->from('users')->where('vehicle_no',$_REQUEST['vehicle_no'])->get();
+		$user = $this->vehicleModel->select()->from('users')->where('vehicle_no',$_REQUEST['vehicle_no'])->get();
 		if($user)
 		{
 			$user->password = null;
@@ -72,26 +75,50 @@ class CustomerApi extends CI_Controller
 
 	public function register()
 	{
-
-		$inputs = $_REQUEST;
-
-
-		if(!$this->userModel->select()->from('users')->where('vehicle_no',$inputs['vehicle_no'])->count())
-		{
-			$user = $this->userModel->create([
-				'title' => $inputs['name'],
-				'vehicle_no' => $inputs['vehicle_no'],
-				'vehicle_type' => $inputs['vehicle_type'],
-				'mobile' => $inputs['mobile'],
-			]);
-
-
-			renderJson(['id' => $this->userModel->lastID()]);
-		}else{
-			renderJsonError('User Exist already!');
-		}
+        if(request()->isPost)
+        {
+            $this->vehicleModel->register();
+        }else{
+            renderJsonError('Method Not Supported');
+        }
 
 	}
+
+
+
+	public function changePassword()
+	{
+
+		$inputs = $_REQUEST;
+		$pp = $inputs['password'];
+		$uid = $inputs['User-ID'];
+
+		if($this->vehicleModel->select()->from('users')->where('id',$uid)->count())
+		{
+
+
+
+			if($this->vehicleModel->update($uid,[
+				'password' => password_hash($pp,PASSWORD_DEFAULT)
+			])){
+				sendJSON('password changed successfully');
+			}else{
+				renderJsonError('Unexpected Error Happen');
+			}
+
+
+
+		}else{
+			renderJsonError('User not Exist!');
+		}
+
+
+	}
+
+
+
+
+
 
 
 

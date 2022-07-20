@@ -1,4 +1,10 @@
 <?php
+namespace App\Models\old;
+
+use App\Models\Exception;
+use App\Models\Throwable;
+
+use function renderJsonError;
 
 abstract class DBModel extends CI_Model
 {
@@ -100,7 +106,6 @@ abstract class DBModel extends CI_Model
 	{
 		return $this->db->get($this->getTable())->result();
 	}
-
 
 	public function getOnly(...$columns)
 	{

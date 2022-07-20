@@ -1,5 +1,5 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class SellerApi extends CI_Controller
 {
 
@@ -8,12 +8,13 @@ class SellerApi extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('userModel');
+		$this->load->helper('commons');
 	}
 
 	public function index ()
 	{
 
-		$data = $this->userModel->select()->where('role','staff')->where('is_admin',false)->all();
+		$data = $this->userModel->select()->where('role','seller')->where('is_admin',false)->all();
 		renderJson($data);
 
 
